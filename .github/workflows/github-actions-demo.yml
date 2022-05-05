@@ -44,6 +44,7 @@ jobs:
         id: install-kubectl
         uses: Azure/setup-kubectl@v2.1
 
+      # 通过镜像新建或者更新负载
       - name: deploy to cci
         uses: huaweicloud/deploy-cci-action@v1.0.1
         id: deploy-to-cci
@@ -55,3 +56,18 @@ jobs:
           namespace: action-namespace-name
           deployment: action-deployment-name
           image: ${{ steps.build-image.outputs.image }}
+
+
+      # 通过yaml新建或者更新负载,yaml文件可以根据自己的需求修改pod数量，容器的端口，cpu, 内存
+      # - name: deploy to cci
+      #   uses: huaweicloud/deploy-cci-action@v1.0.1
+      #   id: deploy-to-cci
+      #   with:
+      #     access_key: ${{ secrets.ACCESSKEY }}
+      #     secret_key: ${{ secrets.SECRETACCESSKEY }}
+      #     project_id: ${{env.PROJECT_ID}}
+      #     region: ${{ env.REGION_ID }}
+      #     namespace: action-namespace-name
+      #     deployment: action-deployment-name
+      #     manifest: './deployment.yaml' 
+      #     image: ${{ steps.build-image.outputs.image }}
