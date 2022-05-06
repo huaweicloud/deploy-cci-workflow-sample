@@ -14,7 +14,7 @@ machine:
     euler:
       - default
 scripts:
-  - sed "s#java:8#swr.cn-north-5.myhuaweicloud.com/codeci/maven:maven3.5.3-jdk1.8-1.3.0#" Dockerfile
+  - sed -i "s#java:8#swr.cn-north-5.myhuaweicloud.com/codeci/maven:maven3.5.3-jdk1.8-1.3.0#" Dockerfile
   - cat Dockerfile
   - mvn package -Dmaven.test.skip=true
   - >-
