@@ -19,10 +19,9 @@ machine:
 scripts:
   - mvn package -Dmaven.test.skip=true
   - tar -zcvf  deploy-cci-workflow-sample-${CID_BUILD_NUMBER}.tar.gz  target/
-  - ls -al .
 #   - docker build -t registry-cbu.huawei.com/dtse-hdn/deploy-cci-workflow-sample:${CID_SHORT_UID} .
   
 #  构建产物
 artifacts:
-  fd:
-    deploy-cci-workflow-sample: deploy-cci-workflow-sample-${CID_BUILD_NUMBER}.tar.gz
+  package:
+    - deploy-cci-workflow-sample-${CID_BUILD_NUMBER}.*.tar.gz
