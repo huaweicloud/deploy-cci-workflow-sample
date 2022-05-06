@@ -17,7 +17,8 @@ machine:
     
 #  构建脚本
 scripts:
-  - mvn package -Dmaven.test.skip=true
+  - mvn versions:set -DnewVersion=${CID_BUILD_TIME} package -Dmaven.test.skip=true
+  - ls -al target
 #   - docker build -t registry-cbu.huawei.com/dtse-hdn/deploy-cci-workflow-sample:${CID_SHORT_UID} .
   
 #  构建产物
