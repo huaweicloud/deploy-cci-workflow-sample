@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class JavaWebDemoApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(JavaWebDemoApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(JavaWebDemoApplication.class, args);
+    }
 }
