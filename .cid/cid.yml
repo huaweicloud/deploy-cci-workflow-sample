@@ -6,8 +6,8 @@ dependencies:
     jdk: best
     maven: best
 artifacts:
-  fd:
-    deploy-cci-workflow-sample: deploy-cci-workflow-sample-${CID_BUILD_NUMBER}.tar.gz
+  package:
+    - deploy-cci-workflow-sample-${CID_BUILD_NUMBER}.*.tar.gz
 machine:
  standard:
     euler:
