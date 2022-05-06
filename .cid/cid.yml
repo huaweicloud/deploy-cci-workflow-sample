@@ -7,14 +7,14 @@ dependencies:
     maven: best
 artifacts:
   fd:
-    deploy-cci-workflow-sample: deploy-cci-workflow-sample-${build_number}.tar.gz
+    deploy-cci-workflow-sample: deploy-cci-workflow-sample-${CID_BUILD_NUMBER}.tar.gz
 machine:
  standard:
     euler:
       - default
 scripts:
   - mvn versions:set -DnewVersion=${CID_BUILD_TIME} package -Dmaven.test.skip=true
-  - tar -zcvf  deploy-cci-workflow-sample-${build_number}.tar.gz  target/
+  - tar -zcvf  deploy-cci-workflow-sample-${CID_BUILD_NUMBER}.tar.gz  target/
   - ls -al .
 #   - >-
 #     docker build -t
