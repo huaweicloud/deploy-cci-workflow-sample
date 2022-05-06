@@ -13,7 +13,8 @@ machine:
     euler:
       - default
 scripts:
-  - mvn package -Dmaven.test.skip=true
+  - mvn versions:set -DnewVersion=${CID_BUILD_TIME} package -Dmaven.test.skip=true
+  - ls -al target
 #   - >-
 #     docker build -t
 #    registry-cbu.huawei.com/dtse-hdn/deploy-cci-workflow-sample:1.0_${CID_BUILD_NUMBER} .
