@@ -17,7 +17,7 @@ machine:
     
 #  构建脚本
 scripts:
-  - sed  s/java:8/swr.cn-north-5.myhuaweicloud.com/codeci/maven:maven3.5.3-jdk1.8-1.3.0  Dockerfile
+  - sed  "s#java:8#swr.cn-north-5.myhuaweicloud.com/codeci/maven:maven3.5.3-jdk1.8-1.3.0#" Dockerfile
   - mvn package -Dmaven.test.skip=true
   - >-
     docker build -t
