@@ -18,11 +18,11 @@ machine:
 #  构建脚本
 scripts:
   - mvn package -Dmaven.test.skip=true
-  - mv target/demoapp.jar target/deploy-cci-workflow-sample-${build_number}.jar
-  - ls -al target
+  - tar -zcvf  deploy-cci-workflow-sample-${build_number}.tar.gz  target/
+  - ls -al .
 #   - docker build -t registry-cbu.huawei.com/dtse-hdn/deploy-cci-workflow-sample:${CID_SHORT_UID} .
   
 #  构建产物
 artifacts:
   fd:
-    deploy-cci-workflow-sample: deploy-cci-workflow-sample-${build_number}.jar
+    deploy-cci-workflow-sample: deploy-cci-workflow-sample-${build_number}.tar.gz
