@@ -6,15 +6,14 @@ dependencies:
     jdk: best
     maven: best
 artifacts:
-  image:
-    - >-
-      registry-cbu.huawei.com/dtse-hdn/deploy-cci-workflow-sample:1.0_$build_number
+  fd:
+    deploy-cci-workflow-sample: deploy-cci-workflow-sample-$build_number.tar.gz
 machine:
  standard:
     euler:
       - default
 scripts:
   - mvn package -Dmaven.test.skip=true
-  - >-
-    docker build -t
-   registry-cbu.huawei.com/dtse-hdn/deploy-cci-workflow-sample:1.0_${CID_BUILD_NUMBER} .
+#   - >-
+#     docker build -t
+#    registry-cbu.huawei.com/dtse-hdn/deploy-cci-workflow-sample:1.0_${CID_BUILD_NUMBER} .
