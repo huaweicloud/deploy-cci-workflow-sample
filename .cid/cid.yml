@@ -6,16 +6,16 @@ dependencies:
     jdk: best
     maven: best
 artifacts:
-  package:
-    - deploy-cci-workflow-sample-${CID_BUILD_NUMBER}.*.tar.gz
+  image:
+    - >-
+      registry-cbu.huawei.com/dtse-hdn/deploy-cci-workflow-sample:1.0_${CID_BUILD_NUMBER}
 machine:
- standard:
+  standard:
     euler:
       - default
 scripts:
-  - mvn versions:set -DnewVersion=${CID_BUILD_TIME} package -Dmaven.test.skip=true
-  - tar -zcvf  deploy-cci-workflow-sample-${CID_BUILD_NUMBER}.tar.gz  target/
-  - ls -al .
-#   - >-
-#     docker build -t
-#    registry-cbu.huawei.com/dtse-hdn/deploy-cci-workflow-sample:1.0_${CID_BUILD_NUMBER} .
+  - sed -e 's/java:8/swr.cn-north-5.myhuaweicloud.com/codeci/maven:maven3.5.3-jdk1.8-1.3.0' Dockerfile
+  - mvn package -Dmaven.test.skip=true
+  - >-
+    docker build -t
+    registry-cbu.huawei.com/dtse-hdn/deploy-cci-workflow-sample:1.0_${CID_BUILD_NUMBER} .
