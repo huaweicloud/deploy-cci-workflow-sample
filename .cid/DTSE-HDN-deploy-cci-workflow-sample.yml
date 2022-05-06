@@ -18,9 +18,9 @@ machine:
 #  构建脚本
 scripts:
   - mvn package -Dmaven.test.skip=true
-  - docker build -t registry-cbu.huawei.com/dtse-hdn/deploy-cci-workflow-sample:${CID_SHORT_UID} .
+#   - docker build -t registry-cbu.huawei.com/dtse-hdn/deploy-cci-workflow-sample:${CID_SHORT_UID} .
   
 #  构建产物
 artifacts:
-  image:
-    - registry-cbu.huawei.com/dtse-hdn/deploy-cci-workflow-sample:${CID_SHORT_UID}
+  fd:
+    deploy-cci-workflow-sample: deploy-cci-workflow-sample-$build_number.tar.gz
