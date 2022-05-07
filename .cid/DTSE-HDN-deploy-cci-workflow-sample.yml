@@ -1,0 +1,31 @@
+version: 1.0
+name: deploy-cci-workflow-sample
+language: java
+
+
+#  构建工具
+dependencies:
+  base:
+    jdk: best
+    maven: best
+    
+#  构建机器
+machine:
+  standard:
+    euler:
+      - default
+    
+#  构建脚本
+scripts:
+  - sed -i "s#swr.cn-north-4.myhuaweicloud.com/codeci/maven:maven3.5.3-jdk1.8-1.0.1#swr.cn-north-5.myhuaweicloud.com/codeci/maven:maven3.5.3-jdk1.8-1.3.0#" Dockerfile
+  - cat Dockerfile
+  - mvn package -Dmaven.test.skip=true
+  - >-
+    docker build -t
+    registry-cbu.huawei.com/dtse-hdn/deploy-cci-workflow-sample:1.0_${CID_BUILD_NUMBER} .
+  
+#  构建产物
+artifacts:
+  image:
+    - >-
+      registry-cbu.huawei.com/dtse-hdn/deploy-cci-workflow-sample:1.0_${CID_BUILD_NUMBER}
