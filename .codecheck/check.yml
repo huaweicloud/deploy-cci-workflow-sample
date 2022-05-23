@@ -1,4 +1,8 @@
 version: 2.0
+
+steps:
+ pre_codecheck:
+  - checkout
 #工具参数
 tool_params:
     secsolar:
