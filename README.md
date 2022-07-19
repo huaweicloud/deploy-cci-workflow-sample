@@ -107,7 +107,7 @@ CCI部署有如下场景（下面场景workflow不同在部署cci action参数�
 ```
 ### 部署容器实例deploy-安装Kubectl工具
 ```yaml
-      - name: Kubectl tool installer
+      - name: Kubectl Tool Installer
         id: install-kubectl
         uses: Azure/setup-kubectl@v2.1
 ```
@@ -170,6 +170,7 @@ spec:
       - name: imagepull-secret
 ```
 备注：  
-1) github workflow yml地址: .github/workflows/deploy-cci-demo.yml  
-2) manifest yml地址: deployment.yaml
+1) github workflow yml地址:
+[.github/workflows/deploy-cci-demo.yml](.github/workflows/deploy-cci-demo.yml)
+2) manifest yml地址: [deployment.yaml](deployment.yaml)
 
