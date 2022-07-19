@@ -28,7 +28,7 @@ jobs:
           access-key-id: ${{ secrets.ACCESSKEY }}
           access-key-secret: ${{ secrets.SECRETACCESSKEY }}
 
-      - name: Build, Tag, and push image to HuaweiCloud SWR
+      - name: Build, Tag, and Push Image to HuaweiCloud SWR
         id: build-image
         env:
           SWR_REGISTRY: swr.${{ env.REGION_ID }}.myhuaweicloud.com
@@ -56,7 +56,7 @@ jobs:
         uses: Azure/setup-kubectl@v2.1
 
       # 通过镜像新建或者更新负载
-      - name: deploy to cci
+      - name: Deploy to CCI
         uses: huaweicloud/deploy-cci-action@v1.0.1
         id: deploy-to-cci
         with:
@@ -66,7 +66,7 @@ jobs:
 
 
       # 通过yaml新建或者更新负载,yaml文件可以根据自己的需求修改pod数量，容器的端口，cpu, 内存
-      # - name: deploy to cci
+      # - name: Deploy to CCI
       #   uses: huaweicloud/deploy-cci-action@v1.0.1
       #   id: deploy-to-cci
       #   with:

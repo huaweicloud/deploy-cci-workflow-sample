@@ -83,7 +83,7 @@ CCI部署有如下场景（下面场景workflow不同在部署cci action参数�
 
 ### 代码容器构建build-制作并推送镜像到SWR
 ```yaml
-      - name: Build, tag, and push image to HuaweiCloud SWR
+      - name: Build, Tag, and Push Image to HuaweiCloud SWR
         id: build-image
         env:
           SWR_REGISTRY: swr.${{ env.REGION_ID }}.myhuaweicloud.com
@@ -115,7 +115,7 @@ CCI部署有如下场景（下面场景workflow不同在部署cci action参数�
 ### 部署容器实例deploy-部署镜像到CCI
 #### 部署镜像到CCI场景一：通过简单参数直接创建或者更新负载
 ```yaml
-      - name: deploy to cci
+      - name: Deploy to CCI
         uses: huaweicloud/deploy-cci-action@v1.0.1
         id: deploy-to-cci
         with:
@@ -126,7 +126,7 @@ CCI部署有如下场景（下面场景workflow不同在部署cci action参数�
 #### 部署镜像到CCI场景二：更加提供的yaml文件创建或者更新负载
 1) action 内容
 ```yaml
-    - name: deploy to cci
+    - name: Deploy to CCI
       uses: huaweicloud/deploy-cci-action@v1.0.1
       id: deploy-to-cci
       with:
