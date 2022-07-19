@@ -54,7 +54,7 @@ CCI部署有如下场景（下面场景workflow不同在部署cci action参数�
 2) 打包maven项目  
 3) SWR容器镜像服务鉴权  
 4) 制作并推送镜像到SWR  
-
+  
 二、部署容器实例deploy
 1) 华为云统一鉴权
 2) 安装Kubectl工具  
