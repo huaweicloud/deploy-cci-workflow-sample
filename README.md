@@ -73,7 +73,7 @@ CCI部署有如下场景（下面场景workflow不同在部署cci action参数�
 
 ### 代码容器构建build-SWR容器镜像服务鉴权
 ```yaml
-      - name: Log in to HuaweiCloud SWR
+      - name: Log in to Huawei Cloud SWR
         uses: huaweicloud/swr-login@v1
         with:
           region: ${{ env.REGION_ID }}
@@ -83,7 +83,7 @@ CCI部署有如下场景（下面场景workflow不同在部署cci action参数�
 
 ### 代码容器构建build-制作并推送镜像到SWR
 ```yaml
-      - name: Build, Tag, and Push Image to HuaweiCloud SWR
+      - name: Build, Tag, and Push Image to Huawei Cloud SWR
         id: build-image
         env:
           SWR_REGISTRY: swr.${{ env.REGION_ID }}.myhuaweicloud.com
