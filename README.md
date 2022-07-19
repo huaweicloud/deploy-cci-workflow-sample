@@ -170,7 +170,5 @@ spec:
       - name: imagepull-secret
 ```
 备注：  
-1) github workflow yml地址:
-[.github/workflows/deploy-cci-demo.yml](.github/workflows/deploy-cci-demo.yml)
+1) github workflow yml地址:[.github/workflows/deploy-cci-demo.yml](.github/workflows/deploy-cci-demo.yml)
 2) manifest yml地址: [deployment.yaml](deployment.yaml)
-
