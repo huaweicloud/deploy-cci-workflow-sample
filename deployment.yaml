@@ -1,0 +1,28 @@
+apiVersion: apps/v1      # 注意这里与Pod的区别，Deployment是apps/v1而不是v1
+kind: Deployment         # 资源类型为Deployment
+metadata:
+  name: action-deployment-name            # Deployment的名称
+spec:
+  replicas: 2            # Pod的数量，Deployment会确保一直有2个Pod运行         
+  selector:              # Label Selector
+    matchLabels:
+      app: action-deployment-name
+  template:              # Pod的定义，用于创建Pod，也称为Pod template
+    metadata:
+      labels:
+        app: action-deployment-name
+    spec:
+      containers:
+      - image: swr.cn-north-4.myhuaweicloud.com/hcloudcli/ccidemo:cdb1d2d867b97ea1fae088411bd73e0cc9c1dc52
+        name: container-0
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: 500m
+            memory: 1024Mi
+          requests:
+            cpu: 500m
+            memory: 1024Mi
+      imagePullSecrets:           # 拉取镜像使用的证书，必须为imagepull-secret
+      - name: imagepull-secret
