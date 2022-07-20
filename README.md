@@ -116,23 +116,23 @@ CCI部署有如下场景：
 #### 部署镜像到CCI场景一：通过简单参数直接创建或者更新负载
 ```yaml
       - name: Deploy to CCI
-        uses: huaweicloud/deploy-cci-action@v1.0.3
+        uses: huaweicloud/deploy-cci-action@v1.1.0
         id: deploy-to-cci
         with:
           namespace: action-namespace-name
           deployment: action-deployment-name
-          image: ${{ steps.build-image.outputs.image }}
+          image: ${{ needs.build.outputs.image }}
  ```    
 #### 部署镜像到CCI场景二：根据提供的yaml文件创建或者更新负载
 1) action 内容
 ```yaml
     - name: Deploy to CCI
-      uses: huaweicloud/deploy-cci-action@v1.0.3
+      uses: huaweicloud/deploy-cci-action@v1.1.0
       id: deploy-to-cci
       with:
         namespace: action-namespace-name
         deployment: action-deployment-name
-        image: ${{ steps.build-image.outputs.image }}
+        image: ${{ needs.build.outputs.image }}
         manifest: ./deployment.yml
 ```
 
