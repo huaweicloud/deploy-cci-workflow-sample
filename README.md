@@ -1,9 +1,9 @@
 # 部署华为云容器实例CCI Workflow样例
 **本READEME指导是基于action: [Huawei Cloud CCI Deoloy](https://github.com/marketplace/actions/huawei-cloud-cci-deoloy)使用华为云容器实例CCI的workflows样例**    
 
-CCI部署有如下场景（下面场景workflow不同在部署cci action参数用法）：  
+CCI部署有如下场景：  
 1.通过简单参数直接创建或者更新负载  
-2.更加提供的yaml文件创建或者更新负载  
+2.根据提供的yaml文件创建或者更新负载  
 
 ## **前置工作**
 ### 1.鉴权认证
@@ -123,7 +123,7 @@ CCI部署有如下场景（下面场景workflow不同在部署cci action参数�
           deployment: action-deployment-name
           image: ${{ steps.build-image.outputs.image }}
  ```    
-#### 部署镜像到CCI场景二：更加提供的yaml文件创建或者更新负载
+#### 部署镜像到CCI场景二：根据提供的yaml文件创建或者更新负载
 1) action 内容
 ```yaml
     - name: Deploy to CCI
