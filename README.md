@@ -30,10 +30,10 @@ CCI部署有如下场景（下面场景workflow不同在部署cci action参数�
 
 | Name          | Require | Default | Description |
 | ------------- | ------- | ------- | ----------- |
-| REGION_ID    |   false        |     cn-north-4    | region：华北-北京四	cn-north-4；华东-上海二	cn-east-2；华东-上海一	cn-east-3；华南-广州	cn-south-1。如果使用华为云统一鉴权[huaweicloud/auth-action](https://github.com/huaweicloud/auth-action)可以不填写改参数。|
-| PROJECT_ID    |   false    |         | 项目ID。如果使用华为云统一鉴权[huaweicloud/auth-action](https://github.com/huaweicloud/auth-action)可以不填写改参数。|
-| ACCESS_KEY_ID    |   false    |         | 华为访问密钥即AK,需要在项目的setting--Secret--Actions下添加 ACCESSKEY 参数。如果使用华为云统一鉴权[huaweicloud/auth-action](https://github.com/huaweicloud/auth-action)可以不填写改参数|
-| ACCESS_KEY_SECRET    |   false    |         | 访问密钥即SK,需要在项目的setting--Secret--Actions下添加SECRETACCESSKEY 两个参数。如果使用华为云统一鉴权[huaweicloud/auth-action](https://github.com/huaweicloud/auth-action)可以不填写改参数|
+| REGION_ID    |   true        |         | region：华北-北京四	cn-north-4；华东-上海二	cn-east-2；华东-上海一	cn-east-3；华南-广州	cn-south-1。获取方式参考[huaweicloud/auth-action](https://github.com/huaweicloud/auth-action)。|
+| PROJECT_ID    |   true    |         | 项目ID。获取方式参考[huaweicloud/auth-action](https://github.com/huaweicloud/auth-action)|
+| ACCESS_KEY_ID    |   true    |         | 华为访问密钥即AK,需要在项目的setting--Secret--Actions下添加 ACCESSKEY 参数。获取方式参考[huaweicloud/auth-action](https://github.com/huaweicloud/auth-action)|
+| ACCESS_KEY_SECRET    |   true    |         | 访问密钥即SK,需要在项目的setting--Secret--Actions下添加SECRETACCESSKEY 参数。获取方式参考[huaweicloud/auth-action](https://github.com/huaweicloud/auth-action)|
 | SWR_ORGANIZATION    |   true    |         | SWR 组织名|
 | IMAGE_NAME    |   true    |         | 镜像名称,用户根据自己镜像命名|  
 2) **huaweicloud/deploy-cci-action参数**  
