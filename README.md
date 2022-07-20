@@ -1,31 +1,39 @@
 # 部署华为云容器实例CCI Workflow样例
+**本READEME指导是基于action: [Huawei Cloud CCI Deoloy](https://github.com/marketplace/actions/huawei-cloud-cci-deoloy)使用华为云容器实例CCI的workflows样例**    
 
-CCI部署有如下场景（下面场景workflow不同在部署cci action参数用法）：  
+CCI部署有如下场景：  
 1.通过简单参数直接创建或者更新负载  
-2.更加提供的yaml文件创建或者更新负载  
+2.根据提供的yaml文件创建或者更新负载  
 
 ## **前置工作**
-#### 用户相关信息获取
-1) ak,sk[获取](https://support.huaweicloud.com/usermanual-ca/ca_01_0003.html?utm_campaign=ua&utm_content=ca&utm_term=console) 
-2) region,project_id[获取](https://support.huaweicloud.com/usermanual-ca/ca_01_0001.html)   
-
-#### 华为云容器实例 [Cloud Container Instance， CCI](https://support.huaweicloud.com/cci/index.html)
+### 1.鉴权认证
+推荐使用[huaweicloud/auth-action](https://github.com/huaweicloud/auth-action)进行华为云部署容器实例的鉴权认证。
+```yaml
+    - name: Authenticate to Huawei Cloud
+      uses: huaweicloud/auth-action@v1.0.0
+      with: 
+          access_key_id: ${{ secrets.ACCESSKEY }} 
+          secret_access_key: ${{ secrets.SECRETACCESSKEY }}
+          region: '<region>'
+          project_id: '<project_id>'
+```
+### 2.华为云容器实例 [Cloud Container Instance， CCI](https://support.huaweicloud.com/cci/index.html)
 1) [服务权限管理设置](https://support.huaweicloud.com/usermanual-cci/cci_01_0074.html)
 2) namespace [创建命名空间(如果不存在action自动创建 )](https://support.huaweicloud.com/qs-cci/cci_qs_0004.html)  
 3) deployment [创建负载(如果不存在action自动创建 )](https://support.huaweicloud.com/qs-cci/cci_qs_0005.html)  
 4) manifest：容器实例的工作负载yaml描述文件   
-#### 容器镜像服务（[SoftWare Repository for Container，SWR](https://support.huaweicloud.com/swr/index.html)）    
+### 3.容器镜像服务（[SoftWare Repository for Container，SWR](https://support.huaweicloud.com/swr/index.html)）    
 1) [创建组织](https://support.huaweicloud.com/usermanual-swr/swr_01_0014.html)   
 2) [授权管理](https://support.huaweicloud.com/usermanual-swr/swr_01_0072.html)
-#### 参数说明
+### 参数说明
 1) **env参数**
 
 | Name          | Require | Default | Description |
 | ------------- | ------- | ------- | ----------- |
-| REGION_ID    |   true        |     cn-north-4    | region：华北-北京四	cn-north-4；华东-上海二	cn-east-2；华东-上海一	cn-east-3；华南-广州	cn-south-1|
-| PROJECT_ID    |   true    |         | 项目ID，可以在[我的凭证](https://console.huaweicloud.com/iam/?locale=zh-cn#/mine/apiCredential)获取|
-| ACCESS_KEY_ID    |   true    |         | 华为访问密钥即AK,需要在项目的setting--Secret--Actions下添加 ACCESSKEY 参数|
-| ACCESS_KEY_SECRET    |   true    |         | 访问密钥即SK,需要在项目的setting--Secret--Actions下添加 ACCESSKEY SECRETACCESSKEY 两个参数|
+| REGION_ID    |   true        |         | region：华北-北京四	cn-north-4；华东-上海二	cn-east-2；华东-上海一	cn-east-3；华南-广州	cn-south-1。获取方式参考[huaweicloud/auth-action](https://github.com/huaweicloud/auth-action)。|
+| PROJECT_ID    |   true    |         | 项目ID。获取方式参考[huaweicloud/auth-action](https://github.com/huaweicloud/auth-action)|
+| ACCESS_KEY_ID    |   true    |         | 华为访问密钥即AK,需要在项目的setting--Secret--Actions下添加 ACCESSKEY 参数。获取方式参考[huaweicloud/auth-action](https://github.com/huaweicloud/auth-action)|
+| ACCESS_KEY_SECRET    |   true    |         | 访问密钥即SK,需要在项目的setting--Secret--Actions下添加SECRETACCESSKEY 参数。获取方式参考[huaweicloud/auth-action](https://github.com/huaweicloud/auth-action)|
 | SWR_ORGANIZATION    |   true    |         | SWR 组织名|
 | IMAGE_NAME    |   true    |         | 镜像名称,用户根据自己镜像命名|  
 2) **huaweicloud/deploy-cci-action参数**  
@@ -40,28 +48,32 @@ CCI部署有如下场景（下面场景workflow不同在部署cci action参数�
 
 
 ## **部署cci样例workflow**
-#### 部署过程分为如下几个步骤
+### 部署过程分为如下几个步骤
+一、代码容器构建build
 1) 代码检出  
 2) 打包maven项目  
 3) SWR容器镜像服务鉴权  
 4) 制作并推送镜像到SWR  
-5) 安装Kubectl工具  
-6) 部署镜像到CCI
-#### 代码检出 
+  
+二、部署容器实例deploy
+1) 华为云统一鉴权
+2) 安装Kubectl工具  
+3) 部署镜像到CCI
+### 代码容器构建build-代码检出 
 ```yaml
       - uses: actions/checkout@v2
 ```
 
-#### 项目打包
+### 代码容器构建build-项目打包
 ```yaml
       - name: Build with Maven
         id: build-project
         run: mvn package -Dmaven.test.skip=true -U -e -X -B
 ```
 
-#### SWR容器镜像服务鉴权
+### 代码容器构建build-SWR容器镜像服务鉴权
 ```yaml
-      - name: Log in to HuaweiCloud SWR
+      - name: Log in to Huawei Cloud SWR
         uses: huaweicloud/swr-login@v1
         with:
           region: ${{ env.REGION_ID }}
@@ -69,9 +81,9 @@ CCI部署有如下场景（下面场景workflow不同在部署cci action参数�
           access-key-secret: ${{ secrets.SECRETACCESSKEY }}
 ```
 
-#### 制作并推送镜像到SWR
+### 代码容器构建build-制作并推送镜像到SWR
 ```yaml
-      - name: Build, tag, and push image to HuaweiCloud SWR
+      - name: Build, Tag, and Push Image to Huawei Cloud SWR
         id: build-image
         env:
           SWR_REGISTRY: swr.${{ env.REGION_ID }}.myhuaweicloud.com
@@ -83,40 +95,41 @@ CCI部署有如下场景（下面场景workflow不同在部署cci action参数�
           docker push $SWR_REGISTRY/$SWR_ORGANIZATION/$IMAGE_NAME:$IMAGE_TAG
           echo "::set-output name=image::$SWR_REGISTRY/$SWR_ORGANIZATION/$IMAGE_NAME:$IMAGE_TAG"
 ```
-
-#### 安装Kubectl工具
+### 部署容器实例deploy-华为云统一鉴权
 ```yaml
-      - name: Kubectl tool installer
+      - name: Authenticate to Huawei Cloud
+        uses: huaweicloud/auth-action@v1.0.0
+        with: 
+            access_key_id: ${{ secrets.ACCESSKEY }} 
+            secret_access_key: ${{ secrets.SECRETACCESSKEY }}
+            region: ${{ env.REGION_ID }}
+            project_id: ${{env.PROJECT_ID}}
+```
+### 部署容器实例deploy-安装Kubectl工具
+```yaml
+      - name: Kubectl Tool Installer
         id: install-kubectl
         uses: Azure/setup-kubectl@v2.1
 ```
 
-#### 部署镜像到CCI
-##### 部署镜像到CCI场景一：通过简单参数直接创建或者更新负载
+### 部署容器实例deploy-部署镜像到CCI
+#### 部署镜像到CCI场景一：通过简单参数直接创建或者更新负载
 ```yaml
-      - name: deploy to cci
-        uses: huaweicloud/deploy-cci-action@v1.0.1
+      - name: Deploy to CCI
+        uses: huaweicloud/deploy-cci-action@v1.0.3
         id: deploy-to-cci
         with:
-          access_key: ${{ secrets.ACCESSKEY }}
-          secret_key: ${{ secrets.SECRETACCESSKEY }}
-          project_id: ${{env.PROJECT_ID}}
-          region: ${{ env.REGION_ID }}
           namespace: action-namespace-name
           deployment: action-deployment-name
           image: ${{ steps.build-image.outputs.image }}
  ```    
-##### 部署镜像到CCI场景二：更加提供的yaml文件创建或者更新负载
+#### 部署镜像到CCI场景二：根据提供的yaml文件创建或者更新负载
 1) action 内容
 ```yaml
-    - name: deploy to cci
-      uses: huaweicloud/deploy-cci-action@v1.0.1
+    - name: Deploy to CCI
+      uses: huaweicloud/deploy-cci-action@v1.0.3
       id: deploy-to-cci
       with:
-        access_key: ${{ secrets.ACCESSKEY }}
-        secret_key: ${{ secrets.SECRETACCESSKEY }}
-        project_id: ${{env.PROJECT_ID}}
-        region: ${{ env.REGION_ID }}
         namespace: action-namespace-name
         deployment: action-deployment-name
         image: ${{ steps.build-image.outputs.image }}
@@ -157,6 +170,5 @@ spec:
       - name: imagepull-secret
 ```
 备注：  
-1) github workflow yml地址: .github/workflows/github-actions-demo.yml  
-2) manifest yml地址: deployment.yaml
-
+1) github workflow yml地址:[.github/workflows/deploy-cci-demo.yml](.github/workflows/deploy-cci-demo.yml)
+2) manifest yml地址: [deployment.yaml](deployment.yaml)

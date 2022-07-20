@@ -12,7 +12,7 @@ env:
   IMAGE_NAME: image_name       # 镜像名称
             
 jobs:
-  deploy_cci:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -21,14 +21,14 @@ jobs:
         id: build-project
         run: mvn package -Dmaven.test.skip=true -U -e -X -B
         
-      - name: Log in to HuaweiCloud SWR
+      - name: Log in to Huawei Cloud SWR
         uses: huaweicloud/swr-login@v1
         with:
           region: ${{ env.REGION_ID }}
           access-key-id: ${{ secrets.ACCESSKEY }}
           access-key-secret: ${{ secrets.SECRETACCESSKEY }}
 
-      - name: Build, tag, and push image to HuaweiCloud SWR
+      - name: Build, Tag, and Push Image to Huawei Cloud SWR
         id: build-image
         env:
           SWR_REGISTRY: swr.${{ env.REGION_ID }}.myhuaweicloud.com
@@ -39,34 +39,37 @@ jobs:
           docker build -t $SWR_REGISTRY/$SWR_ORGANIZATION/$IMAGE_NAME:$IMAGE_TAG .
           docker push $SWR_REGISTRY/$SWR_ORGANIZATION/$IMAGE_NAME:$IMAGE_TAG
           echo "::set-output name=image::$SWR_REGISTRY/$SWR_ORGANIZATION/$IMAGE_NAME:$IMAGE_TAG"
-          
-      - name: Kubectl tool installer
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Authenticate to Huawei Cloud
+        uses: huaweicloud/auth-action@v1.0.0
+        with: 
+            access_key_id: ${{ secrets.ACCESSKEY }} 
+            secret_access_key: ${{ secrets.SECRETACCESSKEY }}
+            region: ${{ env.REGION_ID }}
+            project_id: ${{env.PROJECT_ID}}
+
+      - name: Kubectl Tool Installer
         id: install-kubectl
         uses: Azure/setup-kubectl@v2.1
 
       # 通过镜像新建或者更新负载
-      - name: deploy to cci
-        uses: huaweicloud/deploy-cci-action@v1.0.1
+      - name: Deploy to CCI
+        uses: huaweicloud/deploy-cci-action@v1.0.3
         id: deploy-to-cci
         with:
-          access_key: ${{ secrets.ACCESSKEY }}
-          secret_key: ${{ secrets.SECRETACCESSKEY }}
-          project_id: ${{env.PROJECT_ID}}
-          region: ${{ env.REGION_ID }}
           namespace: action-namespace-name
           deployment: action-deployment-name
           image: ${{ steps.build-image.outputs.image }}
 
 
       # 通过yaml新建或者更新负载,yaml文件可以根据自己的需求修改pod数量，容器的端口，cpu, 内存
-      # - name: deploy to cci
-      #   uses: huaweicloud/deploy-cci-action@v1.0.1
+      # - name: Deploy to CCI
+      #   uses: huaweicloud/deploy-cci-action@v1.0.3
       #   id: deploy-to-cci
       #   with:
-      #     access_key: ${{ secrets.ACCESSKEY }}
-      #     secret_key: ${{ secrets.SECRETACCESSKEY }}
-      #     project_id: ${{env.PROJECT_ID}}
-      #     region: ${{ env.REGION_ID }}
       #     namespace: action-namespace-name
       #     deployment: action-deployment-name
       #     manifest: './deployment.yaml' 
