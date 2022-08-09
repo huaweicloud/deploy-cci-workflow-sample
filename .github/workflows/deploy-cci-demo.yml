@@ -24,7 +24,7 @@ jobs:
         run: mvn package -Dmaven.test.skip=true -U -e -X -B
         
       - name: Log in to Huawei Cloud SWR
-        uses: huaweicloud/swr-login@v1
+        uses: huaweicloud/swr-login@v2.1.0
         with:
           region: ${{ env.REGION_ID }}
           access-key-id: ${{ secrets.ACCESSKEY }}
@@ -47,7 +47,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Authenticate to Huawei Cloud
-        uses: huaweicloud/auth-action@v1.0.0
+        uses: huaweicloud/auth-action@v1.1.0
         with: 
             access_key_id: ${{ secrets.ACCESSKEY }} 
             secret_access_key: ${{ secrets.SECRETACCESSKEY }}
@@ -60,7 +60,7 @@ jobs:
 
       # 通过镜像新建或者更新负载
       - name: Deploy to CCI
-        uses: huaweicloud/deploy-cci-action@v1.1.0
+        uses: huaweicloud/deploy-cci-action@v1.2.0
         id: deploy-to-cci
         with:
           namespace: action-namespace-name
@@ -70,7 +70,7 @@ jobs:
 
       # 通过yaml新建或者更新负载,yaml文件可以根据自己的需求修改pod数量，容器的端口，cpu, 内存
       # - name: Deploy to CCI
-      #   uses: huaweicloud/deploy-cci-action@v1.1.0
+      #   uses: huaweicloud/deploy-cci-action@v1.2.0
       #   id: deploy-to-cci
       #   with:
       #     namespace: action-namespace-name

@@ -7,10 +7,10 @@ CCI部署有如下场景：
 
 ## **前置工作**
 ### 1.鉴权认证
-推荐使用[huaweicloud/auth-action](https://github.com/huaweicloud/auth-action)进行华为云部署容器实例的鉴权认证。
+推荐使用最新版本的[huaweicloud/auth-action](https://github.com/huaweicloud/auth-action)进行华为云部署容器实例的鉴权认证。
 ```yaml
     - name: Authenticate to Huawei Cloud
-      uses: huaweicloud/auth-action@v1.0.0
+      uses: huaweicloud/auth-action@v1.1.0
       with: 
           access_key_id: ${{ secrets.ACCESSKEY }} 
           secret_access_key: ${{ secrets.SECRETACCESSKEY }}
@@ -74,7 +74,7 @@ CCI部署有如下场景：
 ### 代码容器构建build-SWR容器镜像服务鉴权
 ```yaml
       - name: Log in to Huawei Cloud SWR
-        uses: huaweicloud/swr-login@v1
+        uses: huaweicloud/swr-login@v2.1.0
         with:
           region: ${{ env.REGION_ID }}
           access-key-id: ${{ secrets.ACCESSKEY }}
@@ -98,7 +98,7 @@ CCI部署有如下场景：
 ### 部署容器实例deploy-华为云统一鉴权
 ```yaml
       - name: Authenticate to Huawei Cloud
-        uses: huaweicloud/auth-action@v1.0.0
+        uses: huaweicloud/auth-action@v1.1.0
         with: 
             access_key_id: ${{ secrets.ACCESSKEY }} 
             secret_access_key: ${{ secrets.SECRETACCESSKEY }}
@@ -116,7 +116,7 @@ CCI部署有如下场景：
 #### 部署镜像到CCI场景一：通过简单参数直接创建或者更新负载
 ```yaml
       - name: Deploy to CCI
-        uses: huaweicloud/deploy-cci-action@v1.1.0
+        uses: huaweicloud/deploy-cci-action@v1.2.0
         id: deploy-to-cci
         with:
           namespace: action-namespace-name
@@ -127,7 +127,7 @@ CCI部署有如下场景：
 1) action 内容
 ```yaml
     - name: Deploy to CCI
-      uses: huaweicloud/deploy-cci-action@v1.1.0
+      uses: huaweicloud/deploy-cci-action@v1.2.0
       id: deploy-to-cci
       with:
         namespace: action-namespace-name
@@ -172,3 +172,6 @@ spec:
 备注：  
 1) github workflow yml地址:[.github/workflows/deploy-cci-demo.yml](.github/workflows/deploy-cci-demo.yml)
 2) manifest yml地址: [deployment.yaml](deployment.yaml)
+
+## 公网地址说明
+1.代码demo工程中华为云[活动页面](https://activity.huaweicloud.com)
